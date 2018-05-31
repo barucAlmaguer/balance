@@ -1,5 +1,6 @@
-from scale import *
 import matplotlib.pyplot as plt
+import numpy as np
+
 x_low = 0
 x_high = 20
 y_low = -0.5
@@ -9,16 +10,14 @@ plt.axis([x_low, x_high, y_low, y_high])
 plt.ion()
 
 #init serial device
-s = Scale()
-s.initScale(0)
 d = []
 y_prom = []
-center = s.getNext()
+center = np.random.random()
 i = 0
 while True:
     if i >= x_high:
         x = [i for i in range(i - x_high, i)]
-        y = s.getNext() - center
+        y = np.random.random() - center
         d.append(y)
         d.pop(0)
         d2 = list(d[-median_cnt:])
@@ -33,7 +32,7 @@ while True:
         plt.scatter(x, d, color='b')
         plt.plot(x2, y2, color='r')
     else:
-        y = s.getNext() - center
+        y = np.random.random() - center
         d.append(y)
         prom = sum(d)/len(d)
         y_prom.append(prom)
@@ -44,6 +43,3 @@ while True:
         plt.plot(i, prom, color='r')
     plt.pause(0.01)
     i += 1
-
-while True:
-    plt.pause(0.01)
